@@ -55,4 +55,8 @@ client.connect((err) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("SHIHABUN SHAKIB");
+});
+
 app.listen(process.env.PORT || port);
