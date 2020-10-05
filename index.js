@@ -15,6 +15,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect((err) => {
   const volunteersActivitiesCollection = client.db(`${process.env.DB_Name}`).collection("volunteersActivist");
   const userActivityCollection = client.db(`${process.env.DB_Name}`).collection("userActivity");
+  const eventCollection = client.db(`${process.env.DB_Name}`).collection("Event");
 
   // send all voluntary activities to mongodb
   app.post("/sendVolunteersActivities", cors(), (req, res) => {
@@ -60,10 +61,18 @@ client.connect((err) => {
       res.send(documents);
     });
   });
+
+  // Get photo
+  app.post("/Event", cors(), (req, res) => {
+    const userActivities = req.body;
+    eventCollection.insertOne(userActivities).then(() => {
+      res.end;
+    });
+  });
 });
 
 app.get("/", cors(), (req, res) => {
   res.send("SHIHABUN SHAKIB");
 });
 
-app.listen(process.env.PORT || port);
+app.listen(port);
