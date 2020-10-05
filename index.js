@@ -39,18 +39,25 @@ client.connect((err) => {
     });
   });
 
-  // get user activities to mongodb
+  // get user activities from mongodb
   app.get("/getUserActivities", cors(), (req, res) => {
     userActivityCollection.find({ email: req.query.email }).toArray((err, documents) => {
       res.send(documents);
     });
   });
 
-  // delete user activities to mongodb
+  // delete user activities from mongodb
   app.delete("/delete/UserActivities/:id", cors(), (req, res) => {
     console.log(req.params.id);
     userActivityCollection.deleteOne({ _id: ObjectId(req.params.id) }).then((result) => {
       console.log(result);
+    });
+  });
+
+  // get all user activities from mongodb
+  app.get("/usersActivities", cors(), (req, res) => {
+    userActivityCollection.find({}).toArray((err, documents) => {
+      res.send(documents);
     });
   });
 });
