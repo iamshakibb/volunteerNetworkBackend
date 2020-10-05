@@ -62,13 +62,13 @@ client.connect((err) => {
     });
   });
 
-  // Get photo
-  app.post("/Event", cors(), (req, res) => {
-    const userActivities = req.body;
-    eventCollection.insertOne(userActivities).then(() => {
-      res.end;
-    });
-  });
+  // // Get photo
+  // app.post("/Event", cors(), (req, res) => {
+  //   const userActivities = req.body;
+  //   eventCollection.insertOne(userActivities).then(() => {
+  //     res.end;
+  //   });
+  // });
 });
 
 app.get("/", cors(), (req, res) => {
