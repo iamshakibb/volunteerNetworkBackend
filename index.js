@@ -17,7 +17,7 @@ client.connect((err) => {
   const userActivityCollection = client.db(`${process.env.DB_Name}`).collection("userActivity");
 
   // send all voluntary activities to mongodb
-  app.post("/sendVolunteersActivities", (req, res) => {
+  app.post("/sendVolunteersActivities", cors(), (req, res) => {
     const volunteersActivistData = req.body;
     volunteersActivitiesCollection.insertMany(volunteersActivistData).then(() => {
       res.end;
@@ -25,14 +25,14 @@ client.connect((err) => {
   });
 
   // get all voluntary activities to mongodb
-  app.get("/getVolunteersActivities", (req, res) => {
+  app.get("/getVolunteersActivities", cors(), (req, res) => {
     volunteersActivitiesCollection.find({}).toArray((err, documents) => {
       res.send(documents);
     });
   });
 
   // send user activities to mongodb
-  app.post("/sendUserActivities", (req, res) => {
+  app.post("/sendUserActivities", cors(), (req, res) => {
     const userActivities = req.body;
     userActivityCollection.insertOne(userActivities).then(() => {
       res.end;
@@ -40,14 +40,14 @@ client.connect((err) => {
   });
 
   // get user activities to mongodb
-  app.get("/getUserActivities", (req, res) => {
+  app.get("/getUserActivities", cors(), (req, res) => {
     userActivityCollection.find({ email: req.query.email }).toArray((err, documents) => {
       res.send(documents);
     });
   });
 
   // delete user activities to mongodb
-  app.delete("/delete/UserActivities/:id", (req, res) => {
+  app.delete("/delete/UserActivities/:id", cors(), (req, res) => {
     console.log(req.params.id);
     userActivityCollection.deleteOne({ _id: ObjectId(req.params.id) }).then((result) => {
       console.log(result);
@@ -55,7 +55,7 @@ client.connect((err) => {
   });
 });
 
-app.get("/", (req, res) => {
+app.get("/", cors(), (req, res) => {
   res.send("SHIHABUN SHAKIB");
 });
 
