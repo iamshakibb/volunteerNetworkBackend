@@ -18,7 +18,7 @@ client.connect((err) => {
   const eventCollection = client.db(`${process.env.DB_Name}`).collection("Event");
 
   // send all voluntary activities to mongodb
-  app.post("/sendVolunteersActivities", cors(), (req, res) => {
+  app.post("/sendVolunteersActivities", (req, res) => {
     const volunteersActivistData = req.body;
     volunteersActivitiesCollection.insertMany(volunteersActivistData).then(() => {
       res.end;
@@ -26,14 +26,14 @@ client.connect((err) => {
   });
 
   // get all voluntary activities to mongodb
-  app.get("/getVolunteersActivities", cors(), (req, res) => {
+  app.get("/getVolunteersActivities", (req, res) => {
     volunteersActivitiesCollection.find({}).toArray((err, documents) => {
       res.send(documents);
     });
   });
 
   // send user activities to mongodb
-  app.post("/sendUserActivities", cors(), (req, res) => {
+  app.post("/sendUserActivities", (req, res) => {
     const userActivities = req.body;
     userActivityCollection.insertOne(userActivities).then(() => {
       res.end;
@@ -41,7 +41,7 @@ client.connect((err) => {
   });
 
   // get user activities from mongodb
-  app.get("/getUserActivities", cors(), (req, res) => {
+  app.get("/getUserActivities", (req, res) => {
     userActivityCollection.find({ email: req.query.email }).toArray((err, documents) => {
       res.send(documents);
     });
@@ -56,14 +56,14 @@ client.connect((err) => {
   });
 
   // get all user activities from mongodb
-  app.get("/usersActivities", cors(), (req, res) => {
+  app.get("/usersActivities", (req, res) => {
     userActivityCollection.find({}).toArray((err, documents) => {
       res.send(documents);
     });
   });
 
   // // Get photo
-  // app.post("/Event", cors(), (req, res) => {
+  // app.post("/Event",  (req, res) => {
   //   const userActivities = req.body;
   //   eventCollection.insertOne(userActivities).then(() => {
   //     res.end;
@@ -71,8 +71,8 @@ client.connect((err) => {
   // });
 });
 
-app.get("/", cors(), (req, res) => {
+app.get("/", (req, res) => {
   res.send("SHIHABUN SHAKIB");
 });
 
-app.listen(port);
+app.listen(process.env.PORT || port);
